@@ -10,9 +10,9 @@ message(STATUS " Path to CMAKE source directory: ${CMAKE_SOURCE_DIR} ")
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules/)
 find_package(Threads)
 
-set(WARNING_FLAGS "-Wall -Wextra -Wshadow -Wdouble-promotion -Wundef -fno-common -Winit-self -Wuninitialized -Wmissing-declarations -Woverloaded-virtual")
+set(WARNING_FLAGS "-Wall -Wextra -Wshadow -Wdouble-promotion -fno-common -Winit-self -Wuninitialized -Wmissing-declarations -Woverloaded-virtual ")
 set(OPT_FLAGS "-march=native -mtune=native -Ofast -fomit-frame-pointer")
-set(CMAKE_CXX_FLAGS_RELEASE  "${OPT_FLAGS} ${WARNING_FLAGS}")
+set(CMAKE_CXX_FLAGS_RELEASE  "${OPT_FLAGS} ")
 set(CMAKE_CXX_FLAGS_DEBUG " -g -g3 -ggdb -Og ")
 
 include(FindSYCL.cmake)

@@ -34,9 +34,8 @@
 #ifndef _EXPERIMENTAL_DETAIL_SYCL_NAMEGEN__
 #define _EXPERIMENTAL_DETAIL_SYCL_NAMEGEN__
 
-namespace cl {
-namespace sycl {
-namespace helpers {
+inline namespace cl {
+namespace sycl::helpers {
 
 /**
  * Name generator, Details can be used to specialise for a specific
@@ -45,7 +44,6 @@ namespace helpers {
  */
 template <int Index, typename... Details>
 class NameGen {};
-}
 }
 }
 
