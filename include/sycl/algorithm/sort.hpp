@@ -83,7 +83,7 @@ class sort_kernel_sequential {
       : a_(a), vS_(vectorSize){};
 
   // Simple sequential sort
-  void operator()() {
+  void operator()() const {
     for (size_t i = 0; i < vS_; i++) {
       for (size_t j = 1; j < vS_; j++) {
         if (a_[j - 1] > a_[j]) {
@@ -114,7 +114,7 @@ class sort_kernel_sequential_comp {
       : a_(a), vS_(vectorSize), comp_(comp){};
 
   // Simple sequential sort
-  void operator()() {
+  void operator()() const {  //Kernel func must be const
     for (size_t i = 0; i < vS_; i++) {
       for (size_t j = 1; j < vS_; j++) {
         if (comp_(a_[j - 1], a_[j])) {
@@ -125,8 +125,7 @@ class sort_kernel_sequential_comp {
   }
 };  // class sort_kernel
 
-namespace sycl {
-namespace impl {
+namespace sycl::impl {
 
 /* Aliases for SYCL accessors */
 template <typename T>
@@ -332,7 +331,6 @@ void sort(ExecutionPolicy &sep, RandomIt first, RandomIt last, CompareOp comp) {
   }
 }
 
-}  // namespace impl
 }  // namespace sycl
 
 #endif  // __SYCL_IMPL_ALGORITHM_SORT__

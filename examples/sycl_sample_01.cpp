@@ -45,9 +45,10 @@ class multiply_by_factor {
  public:
   multiply_by_factor(long factor) : m_factor(factor){};
 
-  multiply_by_factor(const multiply_by_factor& mp) {
-    this->m_factor = mp.m_factor;
-  };
+  // USELESS and prevents trivial copyaility
+  // multiply_by_factor(const multiply_by_factor& mp) {
+  //   this->m_factor = mp.m_factor;
+  // };
 
   int operator()(int num) const { return num * m_factor; }
 };
