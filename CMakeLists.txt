@@ -1,44 +1,33 @@
-cmake_minimum_required (VERSION 3.2.2)
-project (SyclSTL)
+cmake_minimum_required(VERSION 3.9)
+project(SyclSTL LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 17)
 
 enable_testing()
-
-option(PARALLEL_STL_BENCHMARKS "Build the internal benchmarks" OFF)
-option(USE_COMPUTECPP "Use ComputeCPP" ON)
+option(PARALLEL_STL_BENCHMARKS "Build the internal benchmarks" ON)
+#option(USE_COMPUTECPP "Use ComputeCPP" ON)
 
 message(STATUS " Path to CMAKE source directory: ${CMAKE_SOURCE_DIR} ")
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules/)
-find_package(Threads REQUIRED)
+find_package(Threads)
 
-if (USE_COMPUTECPP)
-  message(STATUS " Using ComputeCpp CMake")
+set(WARNING_FLAGS "-Wall -Wextra -Wshadow -Wdouble-promotion -Wundef -fno-common -Winit-self -Wuninitialized -Wmissing-declarations -Woverloaded-virtual")
+set(OPT_FLAGS "-march=native -mtune=native -Ofast -fomit-frame-pointer")
+set(CMAKE_CXX_FLAGS_RELEASE  "${OPT_FLAGS} ${WARNING_FLAGS}")
+set(CMAKE_CXX_FLAGS_DEBUG " -g -g3 -ggdb -Og ")
 
-  message(STATUS " Path to ComputeCpp implementation: ${COMPUTECPP_PACKAGE_ROOT_DIR} ")
+include(FindSYCL.cmake)
 
-  set(CMAKE_CXX_STANDARD 11)
-
-  include(FindOpenCL)
-  include(FindComputeCpp)
-
-  add_definitions(-DSYCL_PSTL_USE_OLD_ALGO)
-  set(COMPUTECPP_DEVICE_COMPILER_FLAGS "${COMPUTECPP_DEVICE_COMPILER_FLAGS} -DSYCL_PSTL_USE_OLD_ALGO")
-
-  include_directories("${COMPUTECPP_INCLUDE_DIRECTORY}")
-
-
-else()
-  message(STATUS " Using triSYCL CMake")
-  include(FindTriSYCL)
-endif()
-
+include_directories(${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR})
 
 # PSTL specific
 include_directories("include")
-
 add_subdirectory (src)
 add_subdirectory (examples)
 add_subdirectory (tests)
-
+add_subdirectory (benchmarks)
 if (PARALLEL_STL_BENCHMARKS)
-  add_subdirectory (benchmarks)
+
 endif()
+
+add_executable(main main.cpp)
+add_sycl_to_target(TARGET main)

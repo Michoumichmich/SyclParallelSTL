@@ -97,7 +97,7 @@ sycl_algorithm_descriptor compute_mapreduce_descriptor(cl::sycl::device device,
     device.get_info<cl::sycl::info::device::local_mem_size>();
 
   size_t nb_work_item = min(max_work_item, local_mem_size / sizeofB);
-
+  nb_work_item = min(nb_work_item, size); // work_group size can be std::numeric_limits<std::size_t>::max(); //TODO
 
   /* (nb_work_item == 0) iff (sizeof(T) > local_mem_size)
    * If sizeof(T) > local_mem_size, this means that an object
@@ -345,9 +345,10 @@ sycl_algorithm_descriptor compute_mapscan_descriptor(cl::sycl::device device,
 
   const cl::sycl::id<3> max_work_item_sizes =
     device.get_info<cl::sycl::info::device::max_work_item_sizes>();
-  const auto max_work_item = min(
+   auto max_work_item = min(
     device.get_info<cl::sycl::info::device::max_work_group_size>(),
     max_work_item_sizes[0]);
+  max_work_item = min(max_work_item, size); // work_group size can be std::numeric_limits<std::size_t>::max(); //TODO
   size_t nb_work_item = min(max_work_item, size_per_work_group);
   size_t size_per_work_item =
     up_rounded_division(size_per_work_group, nb_work_item);
@@ -396,6 +397,7 @@ void buffer_mapscan(ExecutionPolicy &snp,
       size_t group_id = grp.get_id(0);
       size_t group_begin = group_id * d.size_per_work_group;
       size_t group_end   = min((group_id+1) * d.size_per_work_group, d.size);
+      if(group_end < group_begin) return; //TODO
       size_t local_size = group_end - group_begin;
 
       // Step 0:

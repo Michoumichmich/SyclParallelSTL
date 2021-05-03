@@ -45,7 +45,7 @@
 #undef isunordered
 #undef isgreaterequal
 
-#include <CL/sycl.hpp>
+#include <sycl/sycl.hpp>
 #include <sycl/algorithm/for_each.hpp>
 #include <sycl/algorithm/for_each_n.hpp>
 #include <sycl/algorithm/sort.hpp>

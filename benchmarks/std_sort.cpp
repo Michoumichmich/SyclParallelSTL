@@ -43,8 +43,11 @@ benchmark<>::time_units_t benchmark_sort(const unsigned numReps,
     v1.push_back(i);
   }
 
-  auto time = benchmark<>::duration(numReps, std::sort<decltype(begin(v1))>,
-                                    begin(v1), end(v1));
+   auto mysort = [&]() {
+     std::sort<decltype(begin(v1))>(begin(v1), end(v1));
+  };
+
+  auto time = benchmark<>::duration(numReps, mysort );
 
   return time;
 }
