@@ -85,7 +85,7 @@ TEST_F(TransformAlgorithm, TestSycl4Transform) {
   int n = 4096;
 
   for (int i = 0; i < n; i++) {
-    int x = 10 * (((float)std::rand()) / RAND_MAX);
+    int x = 10 * (((float)std::rand()) / (float)RAND_MAX);
     v.push_back(x);
     res_std.push_back(0);
     res_sycl.push_back(0);

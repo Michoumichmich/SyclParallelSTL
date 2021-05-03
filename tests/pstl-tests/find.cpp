@@ -47,7 +47,7 @@ TEST_F(FindAlgorithm, TestSyclFind) {
   int val_idx = std::rand() % n_elems;
 
   for (int i = 0; i < n_elems / 2; i++) {
-    float x = ((float)std::rand()) / RAND_MAX;
+    float x = (((float)std::rand()) / (float)RAND_MAX);
     if (i == val_idx) {
       v.push_back(x);
     } else {
@@ -73,7 +73,7 @@ TEST_F(FindAlgorithm, TestSyclListFind) {
   int val_idx = std::rand() % n_elems;
 
   for (int i = 0; i < n_elems / 2; i++) {
-    float x = ((float)std::rand()) / RAND_MAX;
+    float x = (((float)std::rand()) / (float)RAND_MAX);
     if (i == val_idx) {
       v.push_back(x);
     } else {
@@ -99,7 +99,7 @@ TEST_F(FindAlgorithm, TestSyclFindIf) {
   int val_idx = std::rand() % n_elems;
 
   for (int i = 0; i < n_elems / 2; i++) {
-    float x = ((float)std::rand()) / RAND_MAX;
+    float x = (((float)std::rand()) / (float)RAND_MAX);
     if (i == val_idx) {
       v.push_back(x);
     } else {
@@ -126,7 +126,7 @@ TEST_F(FindAlgorithm, TestSyclListFindIf) {
   int val_idx = std::rand() % n_elems;
 
   for (int i = 0; i < n_elems / 2; i++) {
-    float x = ((float)std::rand()) / RAND_MAX;
+    float x = (((float)std::rand()) / (float)RAND_MAX);
     if (i == val_idx) {
       v.push_back(x);
     } else {
@@ -153,7 +153,7 @@ TEST_F(FindAlgorithm, TestSyclFindIfNot) {
   int val_idx = std::rand() % n_elems;
 
   for (int i = 0; i < n_elems / 2; i++) {
-    float x = ((float)std::rand()) / RAND_MAX;
+    float x = (((float)std::rand()) / (float)RAND_MAX);
     if (i == val_idx) {
       v.push_back(x);
     } else {
@@ -180,7 +180,7 @@ TEST_F(FindAlgorithm, TestSyclListFindIfNot) {
   int val_idx = std::rand() % n_elems;
 
   for (int i = 0; i < n_elems / 2; i++) {
-    float x = ((float)std::rand()) / RAND_MAX;
+    float x = (((float)std::rand()) / (float)RAND_MAX);
     if (i == val_idx) {
       v.push_back(x);
     } else {

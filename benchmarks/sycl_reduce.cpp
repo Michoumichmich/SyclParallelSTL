@@ -49,7 +49,7 @@ benchmark<>::time_units_t benchmark_reduce(const unsigned numReps,
                                            const cli_device_selector cds) {
   std::vector<int> v;
   for (size_t i = 0; i < N; i++) {
-    int x = 10 * (((float)std::rand()) / RAND_MAX);
+    int x = 10 * (((float)std::rand()) / (float)RAND_MAX);
     v.push_back(x);
   }
 

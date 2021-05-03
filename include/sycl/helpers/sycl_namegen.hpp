@@ -34,7 +34,7 @@
 #ifndef _EXPERIMENTAL_DETAIL_SYCL_NAMEGEN__
 #define _EXPERIMENTAL_DETAIL_SYCL_NAMEGEN__
 
-inline namespace cl {
+namespace cl {
 namespace sycl::helpers {
 
 /**

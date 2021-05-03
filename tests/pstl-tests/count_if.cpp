@@ -44,7 +44,7 @@ TEST_F(CountIfAlgorithm, TestSyclCountIf) {
   int n_elems = 128;
 
   for (int i = 0; i < n_elems; i++) {
-    float x = ((float)std::rand()) / RAND_MAX;
+    float x = (((float)std::rand()) / (float)RAND_MAX);
     v.push_back(x);
   }
 

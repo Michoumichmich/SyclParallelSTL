@@ -89,7 +89,7 @@ TEST_F(ReduceAlgorithm, TestSyclReduce5) {
   int n = 256;
 
   for (int i = 0; i < n; i++) {
-    int x = 10 * (((float)std::rand()) / RAND_MAX);
+    int x = 10 * (((float)std::rand()) / (float)RAND_MAX);
     v.push_back(x);
   }
 
@@ -107,7 +107,7 @@ TEST_F(ReduceAlgorithm, TestSyclReduce6) {
   int n = 128;
 
   for (int i = 0; i < n; i++) {
-    int x = 10 * (((float)std::rand()) / RAND_MAX);
+    int x = 10 * (((float)std::rand()) / (float)RAND_MAX);
     v.push_back(x);
   }
 
@@ -125,7 +125,7 @@ TEST_F(ReduceAlgorithm, TestSyclReduce7) {
   int n = 128;
 
   for (int i = 0; i < n; i++) {
-    int x = 10 * (((float)std::rand()) / RAND_MAX);
+    int x = 10 * (((float)std::rand()) / (float)RAND_MAX);
     v.push_back(x);
   }
 
