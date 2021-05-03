@@ -157,7 +157,7 @@ struct benchmark {
    * @brief Returns the duration (in chrono's type system) of the elapsed time
    */
   template <typename F, typename... Args>
-  static TimeT duration(unsigned numReps, F func, Args&&... args) {
+  static TimeT duration(const unsigned numReps, F func, Args&&... args) {
     TimeT dur = TimeT::zero();
     unsigned reps = 0;
     for (; reps < numReps; reps++) {
