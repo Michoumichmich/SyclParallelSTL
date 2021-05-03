@@ -3,7 +3,7 @@ project(SyclSTL LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 
 enable_testing()
-option(PARALLEL_STL_BENCHMARKS "Build the internal benchmarks" OFF)
+option(PARALLEL_STL_BENCHMARKS "Build the internal benchmarks" ON)
 #option(USE_COMPUTECPP "Use ComputeCPP" ON)
 
 message(STATUS " Path to CMAKE source directory: ${CMAKE_SOURCE_DIR} ")
@@ -24,9 +24,9 @@ include_directories("include")
 add_subdirectory (src)
 add_subdirectory (examples)
 add_subdirectory (tests)
-
+add_subdirectory (benchmarks)
 if (PARALLEL_STL_BENCHMARKS)
-    add_subdirectory (benchmarks)
+
 endif()
 
 add_executable(main main.cpp)

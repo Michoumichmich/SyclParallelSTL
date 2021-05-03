@@ -29,5 +29,5 @@ int main (){
   cl::sycl::queue q;
   sycl::sycl_execution_policy<class FindAlgorithm2> snp(q);
   auto res_sycl = parallel::find(snp, begin(v), end(v), search_val);
-  return res_std==res_sycl;
+  return res_std!=res_sycl;
 }

@@ -43,6 +43,9 @@
 #include "benchmark.h"
 
 
+template <class T>
+using enable_if_exist = typename std::enable_if_t<std::is_object<T>::value &&!std::is_pointer<T>::value &&(sizeof(T) > 0)>;
+using has_cl_vec = enable_if_exist<cl_float3>;
 
 using namespace sycl::helpers;
 
@@ -55,6 +58,7 @@ float getRand() { return 1e18 * std::exp(-1.8) * (.5 - std::rand()); }
 * The Body represents a particle in a three dimensinal space with a mass
 */
 
+template <typename has_cl_vec>
 class Body {
     cl::sycl::cl_float3 pos;  // position components
     cl::sycl::cl_float3 vel;  // velocity components
@@ -81,6 +85,7 @@ public:
     /** update
      * @brief Function that updates the position and velocity of each body
      */
+
     void update() {
         float dthf = 0.25;
         float dtime = 0.01;
@@ -137,11 +142,17 @@ public:
 /** benchmark_nbody
  * @brief Body Function that executes the SYCL CG of NBODY
  */
+
+template <typename has_cl_vec>
 benchmark<>::time_units_t benchmark_nbody(const unsigned numReps,
                                           const unsigned N,
                                           const cli_device_selector cds) {
+
+
+
+
     srand(time(NULL));
-    std::vector<Body> bodies(N);
+    std::vector<Body<has_cl_vec>> bodies(N);
 
     // randomly generating N Particles
     for (size_t i = 0; i < N; i++) {
@@ -157,7 +168,7 @@ benchmark<>::time_units_t benchmark_nbody(const unsigned numReps,
         const auto ndRange = snp2.calculateNdRange(vectorSize);
         auto f = [vectorSize, ndRange, &d_bodies](cl::sycl::handler& h) mutable {
             auto a_bodies =
-                    d_bodies.get_access<cl::sycl::access::mode::read_write>(h);
+                    d_bodies.template get_access<cl::sycl::access::mode::read_write>(h);
             h.parallel_for<class NBodyAlgorithm>(
                     ndRange, [a_bodies, vectorSize](cl::sycl::nd_item<1> id) {
                         if (id.get_global_id(0) < vectorSize) {
@@ -171,7 +182,7 @@ benchmark<>::time_units_t benchmark_nbody(const unsigned numReps,
 
         // Update loop
         std::experimental::parallel::for_each(snp2, begin(d_bodies), end(d_bodies),
-                                              [=](Body& body) {
+                                              [=](Body<has_cl_vec>& body) {
                                                   body.update();
                                                   return body;
                                               });  // main loop
@@ -193,4 +204,4 @@ benchmark<>::time_units_t benchmark_nbody(const unsigned numReps,
     return time;
 }
 
-BENCHMARK_MAIN("BENCH_NBODY", benchmark_nbody, 2, 65536, 1);
+BENCHMARK_MAIN("BENCH_NBODY", benchmark_nbody<has_cl_vec>, 2, 65536, 1);
