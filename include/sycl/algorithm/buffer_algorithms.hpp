@@ -97,7 +97,7 @@ sycl_algorithm_descriptor compute_mapreduce_descriptor(cl::sycl::device device,
     device.get_info<cl::sycl::info::device::local_mem_size>();
 
   size_t nb_work_item = min(max_work_item, local_mem_size / sizeofB);
-
+  nb_work_item = min(nb_work_item, size); // work_group size can be std::numeric_limits<std::size_t>::max();
 
   /* (nb_work_item == 0) iff (sizeof(T) > local_mem_size)
    * If sizeof(T) > local_mem_size, this means that an object
